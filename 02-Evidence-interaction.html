@@ -243,7 +243,6 @@ html, body {
 .investigation-body {
   display: flex;
   flex: 1;
-  min-height: 0;
   overflow: hidden;
   background: transparent;
 }
@@ -283,16 +282,64 @@ html, body {
   overflow: hidden;
   min-width: 0;
 }
+/* Chat area — sticky bottom, frosted glass, content scrolls under */
+.chat-area { padding: 24px 20px; background: rgba(240,240,241,0.3); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); flex-shrink: 0; display: flex; flex-direction: column; align-items: center; position: sticky; bottom: 0; width: 100%; box-sizing: border-box; z-index: 10; isolation: isolate; }
+.chat-inner { width: 100%; max-width: 1024px; }
+.chat-input-row {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+.chat-input-row::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14px; right: 14px;
+  height: 1px;
+  background: linear-gradient(to right, #ffffff, #D3222A, #C247FA, #00AAF3, #ffffff);
+}
+.chat-input-row textarea {
+  width: 100%; height: 56px;
+  background: transparent; border: none; outline: none; resize: none;
+  font-size: 14px; color: var(--t-primary); font-family: var(--font); line-height: 1.5;
+}
+.chat-input-row textarea::placeholder { color: var(--t-tertiary); }
+.chat-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.chat-chips-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.chat-chip {
+  font-size: 14px; color: var(--t-secondary);
+  background: var(--bg-base); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
+}
+.chat-chip:hover { border-color: #cbd5e1; color: var(--t-primary); }
+.chat-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.chat-clear-btn {
+  background: #ffffff; color: #1e293b; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 500;
+  cursor: pointer; font-family: var(--font); transition: all 0.15s;
+}
+.chat-clear-btn:hover { background: #f4f4f5; border-color: #d4d4d8; }
+.chat-send-btn {
+  background: #1e293b; color: #ffffff; border: none;
+  border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); transition: background 0.15s;
+}
+.chat-send-btn:hover { background: #0f172a; }
+.chat-send-btn:disabled { background: rgba(30,41,59,0.30); color: #ffffff; cursor: not-allowed; }
+
 .left-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 44px 20px 180px 20px;
+  padding: 44px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   scrollbar-width: none;
   background: transparent;
-  min-height: 0;
 }
 .left-scroll::-webkit-scrollbar { display: none; }
 .left-scroll-inner {
@@ -538,40 +585,6 @@ html, body {
 .check-green { color: #16a34a; font-size: 14px; }
 .amber-text  { color: #b45309; }
 
-/* CHAT INPUT AREA — fixed at bottom of viewport so it's always visible */
-.chat-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 20px;
-  background: rgba(248,248,249,0.98);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  z-index: 100;
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
-}
-.chat-inner { width: 100%; max-width: 1024px; }
-.chat-input-row { background: #ffffff; border: 1px solid var(--border); border-radius: 24px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; }
-.chat-input-row::before { content: ''; position: absolute; top: 0; left: 14px; right: 14px; height: 1px; background: linear-gradient(to right, #ffffff, #D3222A, #C247FA, #00AAF3, #ffffff); }
-.chat-input-row textarea { width: 100%; height: 56px; background: transparent; border: none; outline: none; resize: none; font-size: 14px; color: var(--t-primary); font-family: inherit; line-height: 1.5; }
-.chat-input-row textarea::placeholder { color: var(--t-tertiary); }
-.chat-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.chat-chips-row { display: flex; gap: 6px; flex-wrap: wrap; }
-.chat-chip { font-size: 14px; color: var(--t-secondary); background: var(--bg-base); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
-.chat-chip:hover { border-color: var(--ui-border-strong); color: var(--t-primary); }
-.chat-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.chat-clear-btn { background: #ffffff; color: var(--ui-dark); border: 1px solid var(--ui-border-strong); border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--font); transition: all 0.15s; }
-.chat-clear-btn:hover { background: #f4f4f5; border-color: #d4d4d8; }
-.chat-send-btn { background: var(--ui-dark); color: #ffffff; border: none; border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: background 0.15s; }
-.chat-send-btn:hover { background: var(--ui-darkest); }
-.chat-send-btn:disabled { background: rgba(30,41,59,0.3); color: #ffffff; cursor: not-allowed; }
-
 /* ============================================================
    RIGHT PANEL
    ============================================================ */
@@ -780,30 +793,6 @@ html, body {
 .stage-label.active { color: #0891b2; font-weight: 600; }
 .stage-label.done   { color: #0891b2; }
 
-/* PRIMARY / SECONDARY BUTTONS */
-.btn-primary {
-  width: 100%; padding: 11px 16px;
-  background: var(--ui-dark); color: #fff;
-  border: none; border-radius: 12px;
-  font-size: 14px; font-weight: 500;
-  cursor: pointer; display: block; text-align: center;
-  transition: background 0.15s, transform 0.1s;
-  margin-bottom: 8px; font-family: var(--font);
-}
-.btn-primary:hover  { background: var(--ui-darkest); }
-.btn-primary:active { transform: scale(0.98); }
-.btn-primary.green  { background: #16a34a; color: #fff; }
-.btn-primary.green:hover { background: #15803d; }
-
-.btn-secondary {
-  display: block; width: 100%; padding: 8px 16px;
-  background: #ffffff; color: var(--t-secondary);
-  border: 1px solid var(--ui-border-strong); border-radius: 12px;
-  font-size: 13px; font-weight: 500;
-  cursor: pointer; text-align: center;
-  transition: all 0.15s; font-family: var(--font);
-}
-.btn-secondary:hover { background: #f4f4f5; border-color: #d4d4d8; }
 
 /* APP LOGO / AVATAR aliases */
 .app-logo {
@@ -862,7 +851,6 @@ html, body {
    ============================================================ */
 /* Screen: base bg. Teal glow lives in .hero-glow-teal (same position as original – under app bar and hero). */
 #screen-0 {
-  position: relative;
   background: var(--bg-base);
 }
 /* Glow layers at z-index 0 so they stay under the app bar and hero; header and main content at z-index 1 */
@@ -979,6 +967,46 @@ html, body {
 .ev-progress-count { font-size: 13px; color: var(--t-secondary); white-space: nowrap; }
 .ev-progress-dot   { color: var(--t-tertiary); font-size: 6px; flex-shrink: 0; margin: 0 20px; }
 
+/* Green complete alert */
+.ev-alert-green {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #D2FF9C;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+.ev-alert-green-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ev-alert-green-icon svg { width: 24px; height: 24px; color: #3F6900; }
+.ev-alert-green-body { flex: 1; }
+.ev-alert-green-title { font-size: 14px; font-weight: 600; color: #3F6900; }
+.ev-alert-green-sub { font-size: 13px; color: #3F6900; margin-top: 2px; }
+
+/* Page transition overlay */
+#nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: #D2FF9C;
+  z-index: 9999;
+  pointer-events: none;
+  clip-path: circle(0% at var(--ox, 50%) var(--oy, 50%));
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#ev-complete-alert {
+  opacity: 0;
+  transform: translateY(-24px);
+  transition: opacity 2s cubic-bezier(0.25,0.1,0.25,1), transform 2s cubic-bezier(0.16,1,0.3,1);
+}
+#ev-complete-alert.ev-alert-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+#ev-complete-alert-wrap {
+  overflow: hidden;
+  height: 0;
+}
+
 /* Scanning queue */
 .ev-queue-grid {
   display: grid;
@@ -1049,6 +1077,7 @@ html, body {
 .ev-log-sub { font-size: 12px; color: var(--t-tertiary); margin-top: 3px; }
 
 </style>
+    <link rel="stylesheet" href="Components/buttons.css">
 </head>
 <body>
 
@@ -1143,13 +1172,29 @@ html, body {
               <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="s2-workflow-step">
                 <div class="s2-step-circle"><img src="Next.svg" width="20" height="20" alt=""></div>
-                Deep Dive
+                Veracity scoring
               </div>
               <span class="s2-workflow-arrow"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
               <div class="s2-workflow-step">
                 <div class="s2-step-circle"><img src="Next.svg" width="20" height="20" alt=""></div>
                 Approve
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complete alert (hidden until progress animation finishes) -->
+        <div id="ev-complete-alert-wrap">
+          <div class="ev-section">
+            <div class="ev-alert-green" id="ev-complete-alert">
+              <div class="ev-alert-green-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5808 16.2538L17.3038 9.53075L16.25 8.47693L10.5808 14.1462L7.73075 11.2962L6.67693 12.35L10.5808 16.2538ZM12.0016 21.5C10.6877 21.5 9.45268 21.2506 8.29655 20.752C7.1404 20.2533 6.13472 19.5765 5.2795 18.7217C4.42427 17.8669 3.74721 16.8616 3.24833 15.706C2.74944 14.5504 2.5 13.3156 2.5 12.0017C2.5 10.6877 2.74933 9.45268 3.248 8.29655C3.74667 7.1404 4.42342 6.13472 5.27825 5.2795C6.1331 4.42427 7.13834 3.74721 8.29398 3.24833C9.44959 2.74944 10.6844 2.5 11.9983 2.5C13.3122 2.5 14.5473 2.74933 15.7034 3.248C16.8596 3.74667 17.8652 4.42342 18.7205 5.27825C19.5757 6.1331 20.2527 7.13834 20.7516 8.29398C21.2505 9.44959 21.5 10.6844 21.5 11.9983C21.5 13.3122 21.2506 14.5473 20.752 15.7034C20.2533 16.8596 19.5765 17.8652 18.7217 18.7205C17.8669 19.5757 16.8616 20.2527 15.706 20.7516C14.5504 21.2505 13.3156 21.5 12.0016 21.5ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76664 19.225 7.87498 17.675 6.32498C16.125 4.77498 14.2333 3.99998 12 3.99998C9.76664 3.99998 7.87498 4.77498 6.32498 6.32498C4.77498 7.87498 3.99998 9.76664 3.99998 12C3.99998 14.2333 4.77498 16.125 6.32498 17.675C7.87498 19.225 9.76664 20 12 20Z" fill="currentColor"/></svg>
+              </div>
+              <div class="ev-alert-green-body">
+                <div class="ev-alert-green-title">Scanning sources is now complete</div>
+                <div class="ev-alert-green-sub">View results to read the summary about the collected evidences, risks and gaps.</div>
+              </div>
+              <button class="btn btn-secondary btn-sm">View results</button>
             </div>
           </div>
         </div>
@@ -1291,27 +1336,27 @@ html, body {
 
         </div><!-- end left-scroll-inner -->
 
-      </div><!-- end left-scroll -->
-    </div>
-
-  </div>
-  <div class="chat-area">
-    <div class="chat-inner">
-      <div class="chat-input-row">
-        <textarea placeholder="Ask about evidence, steer the scan, or reprioritise sources..."></textarea>
-        <div class="chat-bottom">
-          <div class="chat-chips-row">
-            <div class="chat-chip">Prioritise Compliance Maps first</div>
-            <div class="chat-chip">Show gaps in evidence base</div>
-            <div class="chat-chip">Skip External Intel</div>
-          </div>
-          <div class="chat-actions">
-            <button class="chat-clear-btn">Clear</button>
-            <button class="chat-send-btn" disabled>Send</button>
+      <div class="chat-area">
+        <div class="chat-inner">
+          <div class="chat-input-row">
+            <textarea placeholder="Ask about evidence, steer the scan, or reprioritise sources..."></textarea>
+            <div class="chat-bottom">
+              <div class="chat-chips-row">
+                <div class="chat-chip">Prioritise Compliance Maps first</div>
+                <div class="chat-chip">Show gaps in evidence base</div>
+                <div class="chat-chip">Skip External Intel</div>
+              </div>
+              <div class="chat-actions">
+                <button class="btn btn-secondary btn-md">Clear</button>
+                <button class="btn btn-primary btn-md" disabled>Send</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      </div><!-- end left-scroll -->
     </div>
+
   </div>
 </div>
 
@@ -1463,6 +1508,16 @@ html, body {
         fadeInStarted = true;
         if (titleA) titleA.removeEventListener('transitionend', onFadeOutEnd);
         screen0.classList.add('stage-2-text-in');
+        var alertWrap = document.getElementById('ev-complete-alert-wrap');
+        var alertEl = document.getElementById('ev-complete-alert');
+        if (alertWrap) {
+          var targetH = alertWrap.scrollHeight; // measure before transition starts
+          requestAnimationFrame(function() {
+            alertWrap.style.transition = 'height 2s cubic-bezier(0.16,1,0.3,1)';
+            alertWrap.style.height = targetH + 'px';
+            if (alertEl) alertEl.classList.add('ev-alert-visible');
+          });
+        }
       }
       function onFadeOutEnd(e) {
         if (e.target === titleA && e.propertyName === 'opacity') startFadeIn();
@@ -1479,6 +1534,26 @@ html, body {
   }
 
   setTimeout(runAnimation, PAUSE_MS);
+})();
+</script>
+
+<div id="nav-overlay"></div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('#ev-complete-alert .btn');
+    if (!btn) return;
+    e.preventDefault();
+    var overlay = document.getElementById('nav-overlay');
+    var r = btn.getBoundingClientRect();
+    var ox = ((r.left + r.width  / 2) / window.innerWidth  * 100).toFixed(2) + '%';
+    var oy = ((r.top  + r.height / 2) / window.innerHeight * 100).toFixed(2) + '%';
+    overlay.style.setProperty('--ox', ox);
+    overlay.style.setProperty('--oy', oy);
+    overlay.style.clipPath = 'circle(150% at ' + ox + ' ' + oy + ')';
+    setTimeout(function () { window.location.href = '02-Evidence-3.html'; }, 560);
+  });
 })();
 </script>
 
